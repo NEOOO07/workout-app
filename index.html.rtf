@@ -1,0 +1,134 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+<meta charset="UTF-8">\
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\
+<title>Workout Tracker</title>\
+\
+<meta name="theme-color" content="#1a1a2e">\
+<link rel="manifest" href="manifest.json">\
+\
+<style>\
+body \{\
+  margin: 0;\
+  font-family: Arial, sans-serif;\
+  background: #1a1a2e;\
+  color: white;\
+  display: flex;\
+  justify-content: center;\
+  align-items: center;\
+  height: 100vh;\
+\}\
+\
+.app \{\
+  width: 90%;\
+  max-width: 400px;\
+\}\
+\
+h1 \{\
+  text-align: center;\
+  color: #00d2ff;\
+\}\
+\
+.timer \{\
+  text-align: center;\
+  font-size: 40px;\
+  margin: 20px 0;\
+\}\
+\
+.exercise \{\
+  background: #2a2a3d;\
+  padding: 15px;\
+  border-radius: 10px;\
+  margin-bottom: 10px;\
+  cursor: pointer;\
+\}\
+\
+.exercise.completed \{\
+  background: #2f855a;\
+  text-decoration: line-through;\
+\}\
+\
+button \{\
+  width: 100%;\
+  padding: 15px;\
+  border: none;\
+  border-radius: 10px;\
+  margin-top: 10px;\
+  font-weight: bold;\
+  cursor: pointer;\
+\}\
+\
+.start \{\
+  background: #667eea;\
+  color: white;\
+\}\
+\
+.reset \{\
+  background: #444;\
+  color: white;\
+\}\
+</style>\
+</head>\
+<body>\
+\
+<div class="app">\
+<h1>Workout Tracker</h1>\
+<div class="timer" id="timer">00:00</div>\
+\
+<div class="exercise" onclick="toggle(this)">Push-ups</div>\
+<div class="exercise" onclick="toggle(this)">Squats</div>\
+<div class="exercise" onclick="toggle(this)">Plank</div>\
+<div class="exercise" onclick="toggle(this)">Jumping Jacks</div>\
+\
+<button class="start" onclick="start()">Start Workout</button>\
+<button class="reset" onclick="resetWorkout()">Reset</button>\
+</div>\
+\
+<script>\
+let seconds = 0;\
+let interval = null;\
+\
+function start() \{\
+  if (interval) return;\
+  interval = setInterval(() => \{\
+    seconds++;\
+    document.getElementById("timer").textContent = formatTime(seconds);\
+  \}, 1000);\
+\}\
+\
+function resetWorkout() \{\
+  clearInterval(interval);\
+  interval = null;\
+  seconds = 0;\
+  document.getElementById("timer").textContent = "00:00";\
+  document.querySelectorAll(".exercise").forEach(e => \{\
+    e.classList.remove("completed");\
+  \});\
+\}\
+\
+function toggle(element) \{\
+  element.classList.toggle("completed");\
+\}\
+\
+function formatTime(sec) \{\
+  const m = Math.floor(sec / 60);\
+  const s = sec % 60;\
+  return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");\
+\}\
+\
+if ('serviceWorker' in navigator) \{\
+  navigator.serviceWorker.register('sw.js');\
+\}\
+</script>\
+\
+</body>\
+</html>\
+}
